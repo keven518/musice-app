@@ -29,3 +29,26 @@ mounted(){
 2、for(let key in map) 遍历每个属性
 3、字母排序
 4、hot.concat(ret) 合并两个数组
+
+5-5、listview基础组件开发和应用-右侧快速入口实现（1）
+1、vue会检测data、props、computed数据的变化。如果不需要监控数据变化的，可以不用写在这data里， 
+2、(this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0  这种为啥可以取整？
+3、this.$refs.listview.scrollToElement(this.$refs.listGroup[i], 0)  滚动到指定位置，第二个参数是滚动模式，0位无任何动画
+
+5-6、listview基础组件的开发和应用-右侧快速入口实现（2）
+1、监听滚动位置
+        let me = this
+        this.scroll.on('scroll', (pos) => {
+          me.$emit('scroll', pos)
+        })
+2、数据的变化到dom的渲染是有一个延时的
+所以用setTimeout(function(){}, 20)
+3、
+setTimeout(function(){
+  this._calculateHeight()
+}, 20) 
+和 
+setTimeout(()=>{
+  this._calculateHeight()
+}, 20) 的区别
+4、probeType=3 可以监听惯性滚动的数据

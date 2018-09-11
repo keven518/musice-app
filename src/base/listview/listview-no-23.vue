@@ -22,10 +22,8 @@
       <ul>
         <li v-for="(item, i) in shortcutList" 
             :key="i" 
-            class="item"
-            :class="{'current': currentIndex==i}"
+            :class="{'current': currentIndex===i}"
             :data-index="i"
-            :data-currentIndex="currentIndex"
         >
           {{item}}
         </li>
@@ -78,32 +76,20 @@ export default {
       // console.log('newY: ', newY)
       const listHeight = this.listHeight
       console.log('listHeight: ', listHeight)
-      // 当滚动到顶部，newY>0
-      if(newY>0){
-        this.currentIndex = 0
-        return
-      }
+      
       // 在中间部分滚动
-      // for(let i=0; i<listHeight.length; i++){
-      //   let height1 = listHeight[i]
-      //   let height2 = listHeight[i + 1]
-      //   if(!height2 || (-newY > height1 && -newY < height2)) {
-      //     this.currentIndex = i
-      //     console.log('this.currentIndex: ', this.currentIndex)
-      //     return
-      //   }
-      // }
-      for(let i=0; i<listHeight.length-1; i++){
+      for(let i=0; i<listHeight.length; i++){
         let height1 = listHeight[i]
         let height2 = listHeight[i + 1]
-        if(-newY >= height1 && -newY < height2) {
+        if(!height2 || (-newY > height1 && -newY < height2)) {
           this.currentIndex = i
           console.log('this.currentIndex: ', this.currentIndex)
           return
         }
       }
-      // 当滚动到底部，且-newY大于最后一个元素的上限
-      this.currentIndex = listHeight.length-2
+
+      this.currentIndex = 0
+      
       
     }
   },
@@ -143,8 +129,6 @@ export default {
       this.scrollY = pos.y
     },
     _scrollTo(i) {
-      console.log('i: ', i)
-      this.currentIndex = i
       this.$refs.listview.scrollToElement(this.$refs.listGroup[i], 0)
     },
     //计算高度
