@@ -52,3 +52,23 @@ setTimeout(()=>{
   this._calculateHeight()
 }, 20) 的区别
 4、probeType=3 可以监听惯性滚动的数据
+5、 :class="{'bui-active': i==0}"    :class="'bui-active':i==0"  的区别
+
+6-1、歌手详情页布局和设计详解
+1、子路由配置
+{
+      path: '/singer',
+      
+       component: Singer,
+      
+       children: [{
+        
+	path: ':id',
+        
+                component: SingerDetail
+      
+}]
+    }
+2、子路由是弹出一个新层
+
+6-4、Vuex初始化及歌手数据的配置

@@ -1,7 +1,8 @@
 <!--  -->
 <template>
   <div class="singer">
-    <list-view :data="singers"></list-view>
+    <list-view @select="selectSinger" :data="singers"></list-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import axios from 'axios'
 import { ERR_OK } from 'api/config'
 import Singer from 'common/js/singer'
 import listView from 'base/listview/listview'
+import {mapMutations} from 'vuex'
 
 
 const HOT_NAME = '热门'
@@ -35,16 +37,22 @@ export default {
   computed: {},
 
   methods: {
+    selectSinger(singer) {
+      this.$router.push({
+        path: `/singer/${singer.id}`
+      })
+      this.setSinger(singer)
+    },
     getSingerList(){
       axios({
         url: 'https://www.easy-mock.com/mock/5b8fab1d06b4621da8247b00/example/singer_list',
         method: 'get'
       })
       .then(res => {
-        console.log('res: ', res)
+        // console.log('res: ', res)
         if(res.data.code === ERR_OK){
           this.singers = this.normalizeSinger(res.data.data.list);
-          console.log('normalizeSinger: ', this.normalizeSinger(res.data.data.list))
+          // console.log('normalizeSinger: ', this.normalizeSinger(res.data.data.list))
         }
       })
     },
@@ -76,7 +84,7 @@ export default {
           name: item.Fsinger_name,
         }))
       })
-      console.log('map: ', map)
+      // console.log('map: ', map)
 
       // 为了得到有序列表，我们需要处理 map
       let hot = []
@@ -89,12 +97,15 @@ export default {
           hot.push(val)
         }
       }
-      console.log('ret: ', ret)
+      // console.log('ret: ', ret)
       ret.sort((a, b) => {
         return a.title.charCodeAt(0) - b.title.charCodeAt(0)
       })
       return hot.concat(ret);
-    }
+    },
+    ...mapMutations({
+      setSinger: 'SET_SINGER'
+    })
   },
 
   components: {
