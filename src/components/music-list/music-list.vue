@@ -5,13 +5,20 @@
       <i class="icon-back"></i>
     </div>
     <h1 class="title" v-html="title"></h1>
-    <div class="bg-image" :style="bgStyle">
+    <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="filter"></div>
     </div>
+    <scroll :data="songs" class="list" ref="list">
+      <div class="song-list-wrapper">
+        <song-list :songs="songs"></song-list>
+      </div>
+    </scroll>
   </div>
 </template>
 
 <script>
+import Scroll from 'base/scroll/scroll'
+import SongList from 'base/song-list/song-list'
 export default {
   name: '',
 
@@ -37,7 +44,9 @@ export default {
 
   created(){},
 
-  mounted(){},
+  mounted(){
+    this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
+  },
 
   watch: {},
 
@@ -49,7 +58,10 @@ export default {
 
   methods: {},
 
-  components: {}
+  components: {
+    Scroll,
+    SongList
+  }
 }
 
 </script>
@@ -130,6 +142,7 @@ export default {
       background: $color-background
     .list
       position: fixed
+      overflow: hidden
       top: 0
       bottom: 0
       width: 100%

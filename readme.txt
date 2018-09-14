@@ -72,3 +72,6 @@ setTimeout(()=>{
 2、子路由是弹出一个新层
 
 6-4、Vuex初始化及歌手数据的配置
+
+6-9、music-list组件开发（2）
+this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
