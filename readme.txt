@@ -75,3 +75,12 @@ setTimeout(()=>{
 
 6-9、music-list组件开发（2）
 this.$refs.list.$el.style.top = `${this.$refs.bgImage.clientHeight}px`
+子组件里用ref，在使用时必须用this.$refs.list.$el
+
+6-12、music-list组件开发
+1、Math.min(20 * percent, 20)
+2、Math.max(this.minTranslateY, newY)
+3、Math.abs(newY / this.imageHeight)
+
+6-13、music-lis组件开发（6）
+1、封装浏览器厂商
